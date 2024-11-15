@@ -4,295 +4,228 @@ import {
   Image,
   SafeAreaView,
   ScrollView,
-  StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
 import MapView, { Marker, Polyline } from 'react-native-maps';
+import styles from './styles';
+import activities from './activities'
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#141313',
-  },
-  shadow: {
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 3,
-    elevation: 5,
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    backgroundColor: '#1E1E1E',
-  },
-  avatarContainer: {
-    padding: 2,
-    borderRadius: 25,
-    backgroundColor: '#1E1E1E',
-  },
-  avatar: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-  },
-  headerText: {
-    flex: 1,
-    marginLeft: 12,
-  },
-  name: {
-    fontWeight: 'bold',
-    fontSize: 18,
-    color: '#fff',
-  },
-  subtitle: {
-    fontSize: 14,
-    color: '#aaa',
-  },
-  headerIcon: {
-    width: 24,
-    height: 24,
-  },
-  content: {
-    flex: 1,
-    paddingHorizontal: 16,
-  },
-  activityHeader: {
-    backgroundColor: '#1E1E1E',
-    borderRadius: 8,
-    marginTop: 16,
-    overflow: 'hidden',
-  },
-  activityHeaderTop: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingTop: 16,
-  },
-  activityAvatarContainer: {
-    padding: 2,
-    borderRadius: 20,
-    backgroundColor: '#1E1E1E',
-  },
-  activityAvatar: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-  },
-  activityHeaderText: {
-    flex: 1,
-    marginLeft: 12,
-  },
-  activityName: {
-    fontWeight: 'bold',
-    fontSize: 16,
-    color: '#fff',
-  },
-  activitySubtitle: {
-    fontSize: 14,
-    color: '#aaa',
-  },
-  activityTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#fff',
-    paddingHorizontal: 16,
-    paddingTop: 16,
-  },
-  activityDescription: {
-    fontSize: 16,
-    color: '#aaa',
-    marginTop: 4,
-    paddingHorizontal: 16,
-  },
-  userMessage: {
-    fontSize: 16,
-    color: '#fff',
-    marginTop: 12,
-    paddingHorizontal: 16,
-  },
-  activityImage: {
-    width: '100%',
-    height: 200,
-    marginTop: 16,
-  },
-  activityContent: {
-    backgroundColor: '#1E1E1E',
-    borderRadius: 8,
-    marginTop: 16,
-    overflow: 'hidden',
-  },
-  mapContainer: {
-    height: 250,
-    width: '100%',
-  },
-  map: {
-    width: '100%',
-    height: '100%',
-  },
-  stats: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    paddingVertical: 16,
-    backgroundColor: '#1E1E1E',
-  },
-  statItem: {
-    alignItems: 'center',
-  },
-  statValue: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginTop: 8,
-    color: '#fff',
-  },
-  statLabel: {
-    fontSize: 14,
-    color: '#aaa',
-    marginTop: 4,
-  },
-  separator: {
-    height: 1,
-    backgroundColor: '#2A2A2A',
-    marginHorizontal: 16,
-  },
-  interactionSection: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    paddingVertical: 14,
-  },
-  interactionItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  interactionText: {
-    fontSize: 16,
-    color: '#fff',
-    marginLeft: 6,
-  },
-  commentsSection: {
-    marginTop: 24,
-  },
-  commentItem: {
-    flexDirection: 'row',
-    backgroundColor: '#1E1E1E',
-    padding: 12,
-    borderRadius: 8,
-    marginBottom: 12,
-  },
-  commentAvatar: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    marginRight: 12,
-  },
-  commentContent: {
-    flex: 1,
-  },
-  commentName: {
-    fontWeight: 'bold',
-    fontSize: 16,
-    color: '#fff',
-  },
-  commentText: {
-    fontSize: 15,
-    color: '#ccc',
-    marginTop: 4,
-  },
-  commentActions: {
-    flexDirection: 'row',
-    marginTop: 8,
-  },
-  commentActionButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginRight: 16,
-  },
-  commentActionText: {
-    fontSize: 14,
-    color: '#FF6347',
-    marginLeft: 4,
-  },
-  replyItem: {
-    flexDirection: 'row',
-    marginTop: 12,
-    paddingLeft: 40,
-  },
-  replyAvatar: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
-    marginRight: 8,
-  },
-  replyContent: {
-    flex: 1,
-  },
-  replyName: {
-    fontWeight: 'bold',
-    fontSize: 15,
-    color: '#fff',
-  },
-  replyText: {
-    fontSize: 14,
-    color: '#ccc',
-    marginTop: 2,
-  },
-  fabContainer: {
-    position: 'absolute',
-    bottom: 120,
-    right: 20,
-    alignItems: 'flex-end',
-  },
-  fabButton: {
-    width: 56,
-    height: 56,
-    borderRadius: 28,
-    backgroundColor: '#FF6347',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  menu: {
-    backgroundColor: '#1c1b1b',
-    borderRadius: 8,
-    marginBottom: 10,
-    paddingVertical: 10,
-    width: 200,
-  },
-  menuItem: {
-    paddingVertical: 10,
-    paddingHorizontal: 16,
-  },
-  menuItemText: {
-    color: '#fff',
-    fontSize: 16,
-  },
-  navbar: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    paddingVertical: 12,
-    backgroundColor: '#1E1E1E',
-  },
-  navItem: {
-    alignItems: 'center',
-  },
-  navText: {
-    fontSize: 13,
-    color: '#ccc',
-    marginTop: 4,
-  },
-  navTextActive: {
-    fontSize: 13,
-    color: '#FF6347',
-    marginTop: 4,
-  },
-});
 
 const App = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState<'home' | 'activity' | 'notifications' | 'profile'>('home');
+
+
+
+  const HomePage = () => (
+    <ScrollView style={styles.feedContainer}>
+      {activities.map((item) => (
+        <View key={item.id} style={styles.activityCard}>
+          <View style={styles.activityCardHeader}>
+            <TouchableOpacity style={styles.activityAvatarContainer}>
+              <Image source={{ uri: item.user.avatar }} style={styles.activityAvatar} />
+            </TouchableOpacity>
+            <View style={styles.activityHeaderText}>
+              <Text style={styles.activityName}>{item.user.name}</Text>
+              <Text style={styles.activitySubtitle}>{item.user.location}</Text>
+              <Text style={styles.activitySubtitle}>{item.activity.date}</Text>
+            </View>
+          </View>
+          <TouchableOpacity onPress={() => setCurrentPage('activity')}>
+            <Image source={{ uri: item.activity.image }} style={styles.activityCardImage} />
+          </TouchableOpacity>
+          <View style={styles.activityContent}>
+            <Text style={styles.activityTitle}>{item.activity.title}</Text>
+            <Text style={styles.activityDescription}>{item.activity.description}</Text>
+          </View>
+          <View style={styles.interactionSection}>
+            <TouchableOpacity style={styles.interactionItem}>
+              <Entypo name="heart" size={18} color="#FF6347" />
+              <Text style={styles.interactionText}>Pikes</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.interactionItem}>
+              <FontAwesome5 name="comment-dots" size={18} color="#ccc" />
+              <Text style={styles.interactionText}>Commenter</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      ))}
+    </ScrollView>
+  );
+
+  const ActivityPage = () => (
+    <ScrollView style={styles.activityPage}>
+      <Text style={styles.activityPageTitle}>Détails de l'Activité</Text>
+      <View style={styles.activityHeader}>
+        <View style={styles.activityHeaderTop}>
+          <TouchableOpacity style={styles.activityAvatarContainer}>
+            <Image
+              source={{
+                uri: 'https://img.freepik.com/photos-gratuite/gros-plan-homme-souriant-prenant-selfie_23-2149155156.jpg',
+              }}
+              style={styles.activityAvatar}
+            />
+          </TouchableOpacity>
+          <View style={styles.activityHeaderText}>
+            <Text style={styles.activityName}>Jonas Darbellay</Text>
+            <Text style={styles.activitySubtitle}>Il y a 2 jours</Text>
+          </View>
+        </View>
+        <Text style={styles.activityTitle}>Randonnée au Lac d'Annecy</Text>
+        <Text style={styles.activityDescription}>
+          15 km - 800 m D+ - 3h
+        </Text>
+        <Image
+          source={{
+            uri: 'https://www.forestryengland.uk/sites/default/files/media/david-marcu-69433-unsplash.jpg',
+          }}
+          style={styles.activityImage}
+        />
+      </View>
+      <View style={[styles.activityContent, styles.shadow]}>
+        <View style={styles.mapContainer}>
+          <MapView
+            style={styles.map}
+            initialRegion={{
+              latitude: 45.899247,
+              longitude: 6.129384,
+              latitudeDelta: 0.05,
+              longitudeDelta: 0.05,
+            }}
+          >
+            <Marker
+              coordinate={{ latitude: 45.899247, longitude: 6.129384 }}
+              title="Lac d'Annecy"
+              description="Point de départ"
+            />
+            <Marker
+              coordinate={{ latitude: 45.915, longitude: 6.135 }}
+              title="Belvédère"
+            />
+            <Polyline
+              coordinates={[
+                { latitude: 45.899247, longitude: 6.129384 },
+                { latitude: 45.915, longitude: 6.135 },
+                { latitude: 45.899247, longitude: 6.129384 },
+              ]}
+              strokeColor="#32CD32"
+              strokeWidth={4}
+            />
+          </MapView>
+        </View>
+        <View style={styles.stats}>
+          <View style={styles.statItem}>
+            <FontAwesome5 name="road" size={24} color="#1E90FF" />
+            <Text style={styles.statValue}>15 km</Text>
+            <Text style={styles.statLabel}>Distance</Text>
+          </View>
+          <View style={styles.statItem}>
+            <FontAwesome5 name="mountain" size={24} color="#32CD32" />
+            <Text style={styles.statValue}>800 m</Text>
+            <Text style={styles.statLabel}>Dénivelé</Text>
+          </View>
+          <View style={styles.statItem}>
+            <Ionicons name="time-outline" size={24} color="#FF8C00" />
+            <Text style={styles.statValue}>3h</Text>
+            <Text style={styles.statLabel}>Durée</Text>
+          </View>
+        </View>
+      </View>
+      <View style={styles.commentsSection}>
+        <View style={[styles.commentItem, styles.shadow]}>
+          <Image
+            source={{
+              uri: 'https://media.istockphoto.com/id/973159306/fr/photo/mon-jeu-de-selfie-est-sur-le-point.jpg?s=612x612&w=0&k=20&c=FT63szl3xXysfH81uXpF6By8-2YD1Oy-G76v4jH1e5I=',
+            }}
+            style={styles.commentAvatar}
+          />
+          <View style={styles.commentContent}>
+            <Text style={styles.commentName}>Sophie Laurent</Text>
+            <Text style={styles.commentText}>Belle randonnée ! 🏞️</Text>
+            <View style={styles.commentActions}>
+              <TouchableOpacity style={styles.commentActionButton}>
+                <Entypo name="thumbs-up" size={16} color="#FF6347" />
+                <Text style={styles.commentActionText}>8</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.commentActionButton}>
+                <Text style={styles.commentActionText}>Répondre</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+        <View style={[styles.commentItem, styles.shadow]}>
+          <Image
+            source={{
+              uri: 'https://cdn.pixabay.com/photo/2024/05/14/20/52/selfie-8762129_1280.jpg',
+            }}
+            style={styles.commentAvatar}
+          />
+          <View style={styles.commentContent}>
+            <Text style={styles.commentName}>Lucas Moreau</Text>
+            <Text style={styles.commentText}>J'aimerais y aller aussi !</Text>
+            <View style={styles.commentActions}>
+              <TouchableOpacity style={styles.commentActionButton}>
+                <Entypo name="thumbs-up" size={16} color="#FF6347" />
+                <Text style={styles.commentActionText}>5</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.commentActionButton}>
+                <Text style={styles.commentActionText}>Répondre</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </View>
+    </ScrollView>
+  );
+
+  const NotificationsPage = () => (
+    <ScrollView style={styles.notificationsPage}>
+      <View style={styles.notificationsHeader}>
+        <Text style={styles.notificationsTitle}>Notifications</Text>
+      </View>
+      <View style={[styles.notificationItem, styles.shadow]}>
+        <Entypo name="notification" size={24} color="#FF6347" style={styles.notificationIcon} />
+        <Text style={styles.notificationText}>Votre randonnée a été publié !</Text>
+      </View>
+      <View style={[styles.notificationItem, styles.shadow]}>
+        <Ionicons name="person-add" size={24} color="#1E90FF" style={styles.notificationIcon} />
+        <Text style={styles.notificationText}>Nouvel ami ajouté : Claire.</Text>
+      </View>
+      <View style={[styles.notificationItem, styles.shadow]}>
+        <FontAwesome5 name="bell" size={24} color="#32CD32" style={styles.notificationIcon} />
+        <Text style={styles.notificationText}>Vous avez un nouveau message.</Text>
+      </View>
+    </ScrollView>
+  );
+
+  const ProfilePage = () => (
+    <ScrollView style={styles.profilePage}>
+      <View style={styles.profileHeader}>
+        <Image
+          source={{
+            uri: 'https://img.freepik.com/photos-gratuite/gros-plan-homme-souriant-prenant-selfie_23-2149155156.jpg',
+          }}
+          style={styles.profileAvatar}
+        />
+        <Text style={styles.profileName}>Jonas Darbellay</Text>
+        <Text style={styles.profileSubtitle}>Annecy, Haute-Savoie</Text>
+      </View>
+      <TouchableOpacity style={[styles.profileOption, styles.shadow]}>
+        <Ionicons name="settings" size={24} color="#fff" />
+        <Text style={styles.profileOptionText}>Paramètres</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={[styles.profileOption, styles.shadow]}>
+        <Ionicons name="help-circle" size={24} color="#fff" />
+        <Text style={styles.profileOptionText}>Aide</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={[styles.profileOption, styles.shadow]}>
+        <Ionicons name="log-out" size={24} color="#fff" />
+        <Text style={styles.profileOptionText}>Se déconnecter</Text>
+      </TouchableOpacity>
+    </ScrollView>
+  );
 
   return (
     <SafeAreaView style={styles.container}>
@@ -318,159 +251,15 @@ const App = () => {
           />
         </TouchableOpacity>
       </View>
-      <ScrollView style={styles.content}>
-        <View style={[styles.activityHeader, styles.shadow]}>
-          <View style={styles.activityHeaderTop}>
-            <TouchableOpacity style={styles.activityAvatarContainer}>
-              <Image
-                source={{
-                  uri: 'https://img.freepik.com/photos-gratuite/gros-plan-homme-souriant-prenant-selfie_23-2149155156.jpg',
-                }}
-                style={styles.activityAvatar}
-              />
-            </TouchableOpacity>
-            <View style={styles.activityHeaderText}>
-              <Text style={styles.activityName}>Jonas Darbellay</Text>
-              <Text style={styles.activitySubtitle}>Le 12 Septembre à 14h</Text>
-            </View>
-          </View>
-          <Text style={styles.activityTitle}>Trail en Montagne</Text>
-          <Text style={styles.activityDescription}>
-            42 km - 2500 m D+ - 5h30
-          </Text>
-          <Text style={styles.userMessage}>
-            Je l&apos;ai fait c&apos;était compliqué 😅
-          </Text>
-          <Image
-            source={{
-              uri: 'https://www.forestryengland.uk/sites/default/files/media/david-marcu-69433-unsplash.jpg',
-            }}
-            style={styles.activityImage}
-          />
-        </View>
-        <View style={[styles.activityContent, styles.shadow]}>
-          <View style={styles.mapContainer}>
-            <MapView
-              style={styles.map}
-              initialRegion={{
-                latitude: 45.919,
-                longitude: 6.095,
-                latitudeDelta: 0.1,
-                longitudeDelta: 0.1,
-              }}
-            >
-              <Marker
-                coordinate={{ latitude: 45.899247, longitude: 6.129384 }}
-                title="Annecy"
-                description="Point de départ"
-              />
-              <Marker
-                coordinate={{ latitude: 45.942, longitude: 6.14 }}
-                title="Argonay"
-              />
-              <Marker
-                coordinate={{ latitude: 45.919, longitude: 6.06 }}
-                title="Poisy"
-              />
-              <Polyline
-                coordinates={[
-                  { latitude: 45.899247, longitude: 6.129384 },
-                  { latitude: 45.942, longitude: 6.14 },
-                  { latitude: 45.919, longitude: 6.06 },
-                  { latitude: 45.899247, longitude: 6.129384 },
-                ]}
-                strokeColor="#FF6347"
-                strokeWidth={4}
-              />
-            </MapView>
-          </View>
-          <View style={styles.stats}>
-            <View style={styles.statItem}>
-              <FontAwesome5 name="road" size={24} color="#1E90FF" />
-              <Text style={styles.statValue}>42 km</Text>
-              <Text style={styles.statLabel}>Distance</Text>
-            </View>
-            <View style={styles.statItem}>
-              <FontAwesome5 name="mountain" size={24} color="#32CD32" />
-              <Text style={styles.statValue}>2500 m</Text>
-              <Text style={styles.statLabel}>Dénivelé</Text>
-            </View>
-            <View style={styles.statItem}>
-              <Ionicons name="time-outline" size={24} color="#FF8C00" />
-              <Text style={styles.statValue}>5h30</Text>
-              <Text style={styles.statLabel}>Durée</Text>
-            </View>
-          </View>
-          <View style={styles.separator} />
-          <View style={styles.interactionSection}>
-            <TouchableOpacity style={styles.interactionItem}>
-              <Entypo name="heart" size={18} color="#FF6347" />
-              <Text style={styles.interactionText}>40 Peaks</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.interactionItem}>
-              <FontAwesome5 name="comment-dots" size={18} color="#ccc" />
-              <Text style={styles.interactionText}>6 Commentaires</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View style={styles.commentsSection}>
-          <View style={[styles.commentItem, styles.shadow]}>
-            <Image
-              source={{
-                uri: 'https://media.istockphoto.com/id/973159306/fr/photo/mon-jeu-de-selfie-est-sur-le-point.jpg?s=612x612&w=0&k=20&c=FT63szl3xXysfH81uXpF6By8-2YD1Oy-G76v4jH1e5I=',
-              }}
-              style={styles.commentAvatar}
-            />
-            <View style={styles.commentContent}>
-              <Text style={styles.commentName}>Marie Dupont</Text>
-              <Text style={styles.commentText}>Félicitations ! 🎉</Text>
-              <View style={styles.commentActions}>
-                <TouchableOpacity style={styles.commentActionButton}>
-                  <Entypo name="thumbs-up" size={16} color="#FF6347" />
-                  <Text style={styles.commentActionText}>12</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.commentActionButton}>
-                  <Text style={styles.commentActionText}>Répondre</Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.replyItem}>
-                <Image
-                  source={{
-                    uri: 'https://img.freepik.com/photos-gratuite/gros-plan-homme-souriant-prenant-selfie_23-2149155156.jpg',
-                  }}
-                  style={styles.replyAvatar}
-                />
-                <View style={styles.replyContent}>
-                  <Text style={styles.replyName}>Jonas Darbellay</Text>
-                  <Text style={styles.replyText}>Merci</Text>
-                </View>
-              </View>
-            </View>
-          </View>
-          <View style={[styles.commentItem, styles.shadow]}>
-            <Image
-              source={{
-                uri: 'https://cdn.pixabay.com/photo/2024/05/14/20/52/selfie-8762129_1280.jpg',
-              }}
-              style={styles.commentAvatar}
-            />
-            <View style={styles.commentContent}>
-              <Text style={styles.commentName}>Paul Martin</Text>
-              <Text style={styles.commentText}>Super performance 👏</Text>
-              <View style={styles.commentActions}>
-                <TouchableOpacity style={styles.commentActionButton}>
-                  <Entypo name="thumbs-up" size={16} color="#FF6347" />
-                  <Text style={styles.commentActionText}>5</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.commentActionButton}>
-                  <Text style={styles.commentActionText}>Répondre</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-        </View>
-      </ScrollView>
-
+      {currentPage === 'home' ? (
+        <HomePage />
+      ) : currentPage === 'activity' ? (
+        <ActivityPage />
+      ) : currentPage === 'notifications' ? (
+        <NotificationsPage />
+      ) : (
+        <ProfilePage />
+      )}
       <View style={styles.fabContainer}>
         {isMenuOpen && (
           <View style={styles.menu}>
@@ -493,23 +282,78 @@ const App = () => {
           />
         </TouchableOpacity>
       </View>
-
       <View style={[styles.navbar, styles.shadow]}>
-        <TouchableOpacity style={styles.navItem}>
-          <Ionicons name="home" size={28} color="#FF6347" />
-          <Text style={styles.navTextActive}>Accueil</Text>
+        <TouchableOpacity
+          style={styles.navItem}
+          onPress={() => setCurrentPage('home')}
+        >
+          <Ionicons
+            name="home"
+            size={28}
+            color={currentPage === 'home' ? '#FF6347' : '#ccc'}
+          />
+          <Text
+            style={
+              currentPage === 'home' ? styles.navTextActive : styles.navText
+            }
+          >
+            Accueil
+          </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
-          <FontAwesome5 name="running" size={24} color="#ccc" />
-          <Text style={styles.navText}>Activité</Text>
+        <TouchableOpacity
+          style={styles.navItem}
+          onPress={() => setCurrentPage('activity')}
+        >
+          <FontAwesome5
+            name="running"
+            size={24}
+            color={currentPage === 'activity' ? '#FF6347' : '#ccc'}
+          />
+          <Text
+            style={
+              currentPage === 'activity'
+                ? styles.navTextActive
+                : styles.navText
+            }
+          >
+            Activité
+          </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
-          <Ionicons name="notifications" size={24} color="#ccc" />
-          <Text style={styles.navText}>Notifications</Text>
+        <TouchableOpacity
+          style={styles.navItem}
+          onPress={() => setCurrentPage('notifications')}
+        >
+          <Ionicons
+            name="notifications"
+            size={24}
+            color={currentPage === 'notifications' ? '#FF6347' : '#ccc'}
+          />
+          <Text
+            style={
+              currentPage === 'notifications'
+                ? styles.navTextActive
+                : styles.navText
+            }
+          >
+            Notifications
+          </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
-          <Ionicons name="person" size={24} color="#ccc" />
-          <Text style={styles.navText}>Profil</Text>
+        <TouchableOpacity
+          style={styles.navItem}
+          onPress={() => setCurrentPage('profile')}
+        >
+          <Ionicons
+            name="person"
+            size={24}
+            color={currentPage === 'profile' ? '#FF6347' : '#ccc'}
+          />
+          <Text
+            style={
+              currentPage === 'profile' ? styles.navTextActive : styles.navText
+            }
+          >
+            Profil
+          </Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
